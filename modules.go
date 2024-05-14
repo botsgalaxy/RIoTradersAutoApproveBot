@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 
 	"github.com/PaulSonOfLars/gotgbot/v2"
 	"github.com/PaulSonOfLars/gotgbot/v2/ext"
@@ -32,8 +33,7 @@ func autoApproveChatJoinRequest(b *gotgbot.Bot, ctx *ext.Context) error {
 	ok, err := b.ApproveChatJoinRequest(chatId, userId, &gotgbot.ApproveChatJoinRequestOpts{})
 	text := fmt.Sprintf(`<b>🎉 Your request to join on <b>%s</b> has been approved. Enjoy!</b>
 
-	<i>👥 You can add me to your channel or group as admin to automatically approve chat join requests.</i>
-
+	<b>Join our channel @RioTraders</b>
 
 	<b>⚡ Powered by RioTraders™.</b>
 	`, ctx.EffectiveChat.Title)
@@ -41,6 +41,16 @@ func autoApproveChatJoinRequest(b *gotgbot.Bot, ctx *ext.Context) error {
 		_, err := b.SendMessage(userId, text, &gotgbot.SendMessageOpts{
 			ParseMode: "html",
 		})
+		result := DB.Create(&AutoApproveLog{
+			UserId:    userId,
+			FirstName: ctx.EffectiveUser.FirstName,
+			ChatId:    chatId,
+			ChatTitle: ctx.EffectiveChat.Title,
+		})
+
+		if result.Error != nil {
+			log.Println("<< Failed to store approve logs on database >>")
+		}
 		return err
 
 	}

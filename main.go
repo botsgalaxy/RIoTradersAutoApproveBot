@@ -17,6 +17,8 @@ func init() {
 	if err != nil {
 		log.Fatal("Error loading .env file")
 	}
+	DSN := os.Getenv("DSN")
+	migrateDatabase(DSN)
 
 }
 
