@@ -12,7 +12,7 @@ func start(b *gotgbot.Bot, ctx *ext.Context) error {
 	chatId := ctx.EffectiveUser.Id
 	text := fmt.Sprintf(`👋 Hello <b>%s</b>, I am an Auto-Approval Bot. 
 	
-	<i>✨ Please add me to your channel or group as admin to automatically approve member join requests.</i> 
+	<b>Join our channel @RioTraders</b>
 
 	⚡ Powered by <b>RioTraders™.</b>`, ctx.EffectiveUser.FirstName)
 
